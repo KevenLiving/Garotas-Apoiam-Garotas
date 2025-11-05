@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎀 Garotas Apoiam Garotas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .sync-info {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .sync-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .stat-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.8s ease 0.4s both;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            background: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .search-filter {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .search-filter input,
+        .search-filter select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-filter input:focus,
+        .search-filter select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+        }
+
+        .member-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .member-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            color: white;
+            font-weight: bold;
+        }
+
+        .member-info h3 {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .member-info p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .member-details {
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        .detail-icon {
+            font-size: 1.2em;
+        }
+
+        .tiktok-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tiktok-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .badge-frequency {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-niche {
+            background: #fce4ec;
+            color: #c2185b;
+        }
+
+        .badge-email {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .chart-card h3 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 1.3em;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-label {
+            min-width: 150px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+            font-size: 1.2em;
+            background: white;
+            border-radius: 20px;
+        }
+
+        .settings-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .settings-section p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .info-box {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #1976d2;
+        }
+
+        .success-box {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎀 Garotas Apoiam Garotas ✨</h1>
+            <p>Comunidade de Criadoras de Conteúdo do TikTok</p>
+            <div class="sync-info">
+                <div class="sync-indicator"></div>
+                <span id="syncStatus">Conectado ao Google Sheets - Atualização em tempo real</span>
+            </div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-number" id="totalMembers">-</div>
+                <div class="stat-label">Membros Cadastrados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-number" id="activeCreators">-</div>
+                <div class="stat-label">Criadoras Ativas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎬</div>
+                <div class="stat-number" id="withNiche">-</div>
+                <div class="stat-label">Com Nicho Definido</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📧</div>
+                <div class="stat-number" id="withEmail">-</div>
+                <div class="stat-label">Com E-mail Profissional</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('members')">👥 Membros</button>
+            <button class="tab" onclick="switchTab('analytics')">📊 Análises</button>
+            <button class="tab" onclick="switchTab('settings')">⚙️ Configurações</button>
+        </div>
+
+        <div id="members" class="tab-content active">
+            <div class="search-filter">
+                <input type="text" id="searchInput" placeholder="🔍 Buscar por nome, cidade ou nicho..." onkeyup="filterMembers()">
+                <select id="filterFrequency" onchange="filterMembers()">
+                    <option value="">Todas as frequências</option>
+                    <option value="Todos os dias">Todos os dias</option>
+                    <option value="3 a 5 vezes por semana">3 a 5 vezes por semana</option>
+                    <option value="Ainda não posto">Ainda não posto</option>
+                </select>
+                <select id="filterNiche" onchange="filterMembers()">
+                    <option value="">Todos os nichos</option>
+                    <option value="Sim!">Com nicho definido</option>
+                    <option value="Não">Sem nicho definido</option>
+                </select>
+            </div>
+            <div class="members-grid" id="membersGrid">
+                <div class="loading">⏳ Carregando dados do Google Sheets...</div>
+            </div>
+        </div>
+
+        <div id="analytics" class="tab-content">
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>📈 Frequência de Postagens</h3>
+                    <div class="bar-chart" id="frequencyChart"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>🎯 Nichos Mais Populares</h3>
+                    <div class="bar-chart" id="nicheChart"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>📍 Distribuição por Estado</h3>
+                    <div class="bar-chart" id="stateChart"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>📱 Contas Secundárias</h3>
+                    <div class="bar-chart" id="secondaryChart"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings" class="tab-content">
+            <div class="settings-section">
+                <h3>⚙️ Configurações da API</h3>
+                <div class="success-box">
+                    <strong>✅ Sistema Conectado!</strong>
+                    <p>Os dados estão sendo carregados automaticamente do Google Sheets.</p>
+                </div>
+                
+                <div class="info-box">
+                    <strong>🔄 Atualização Automática</strong>
+                    <p>Sempre que você atualizar a planilha no Google Sheets, basta recarregar esta página (F5) para ver os dados mais recentes!</p>
+                </div>
+
+                <p><strong>📊 Planilha conectada:</strong></p>
+                <p style="font-family: monospace; background: #f5f5f5; padding: 10px; border-radius: 5px;">
+                    ID: 1GTtLw0d5Dv5LvWBlmf7Rokf479hssBQ-1yYwb0d9SO0<br>
+                    Aba: Cadastradas
+                </p>
+
+                <button class="btn btn-primary" onclick="loadData()">🔄 Recarregar Dados Agora</button>
+                <button class="btn btn-secondary" onclick="exportData()">💾 Exportar para CSV</button>
+            </div>
+
+            <div class="settings-section">
+                <h3>📚 Como adicionar novos membros</h3>
+                <p>1. Abra a planilha do Google Sheets</p>
+                <p>2. Adicione novos membros na aba "Cadastradas"</p>
+                <p>3. Volte aqui e recarregue a página (F5) ou clique em "Recarregar Dados Agora"</p>
+                <p>4. Pronto! Os novos membros aparecerão automaticamente 🎉</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_KEY = 'AIzaSyBXZtcqIq7ymApH6GbQA5NissdywV0aPws';
+        const SPREADSHEET_ID = '1GTtLw0d5Dv5LvWBlmf7Rokf479hssBQ-1yYwb0d9SO0';
+        const SHEET_NAME = 'Cadastradas';
+
+        let membersData = [];
+        let filteredData = [];
+
+        async function loadData() {
+            try {
+                document.getElementById('syncStatus').textContent = '⏳ Carregando dados...';
+                
+                const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error('Erro ao carregar dados da API');
+                }
+                
+                const data = await response.json();
+                const rows = data.values;
+                
+                if (!rows || rows.length === 0) {
+                    throw new Error('Nenhum dado encontrado');
+                }
+
+                // Converter para formato de objetos
+                const headers = rows[0];
+                membersData = rows.slice(1).map(row => {
+                    const obj = {};
+                    headers.forEach((header, index) => {
+                        obj[header] = row[index] || '';
+                    });
+                    return obj;
+                });
+
+                filteredData = [...membersData];
+                
+                document.getElementById('syncStatus').innerHTML = `<div class="sync-indicator"></div> Dados atualizados • ${new Date().toLocaleTimeString('pt-BR')}`;
+                
+                renderMembers();
+                updateStats();
+                renderCharts();
+                
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('syncStatus').textContent = '❌ Erro ao carregar dados';
+                document.getElementById('membersGrid').innerHTML = `
+                    <div class="no-results">
+                        ❌ Erro ao carregar dados do Google Sheets<br>
+                        <small style="color: #999; margin-top: 10px; display: block;">
+                            ${error.message}<br>
+                            Verifique se a planilha está compartilhada publicamente.
+                        </small>
+                    </div>
+                `;
+            }
+        }
+
+        function renderMembers() {
+            const grid = document.getElementById('membersGrid');
+            grid.innerHTML = '';
+
+            if (filteredData.length === 0) {
+                grid.innerHTML = '<div class="no-results">Nenhum membro encontrado 😕</div>';
+                return;
+            }
+
+            filteredData.forEach(member => {
+                const initial = member['Como prefere ser chamada?']?.charAt(0).toUpperCase() || '?';
+                const tiktok = member['@ ou link do TikTok principal:'] || '';
+                const tiktokClean = tiktok.replace('@', '').replace('https://www.tiktok.com/@', '').split('?')[0];
+                
+                const card = document.createElement('div');
+                card.className = 'member-card';
+                card.innerHTML = `
+                    <div class="member-header">
+                        <div class="member-avatar">${initial}</div>
+                        <div class="member-info">
+                            <h3>${member['Como prefere ser chamada?'] || 'Sem nome'}</h3>
+                            <p>${member['Cidade e Estado:'] || 'Localização não informada'}</p>
+                        </div>
+                    </div>
+                    <div class="member-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📧</span>
+                            <span>${member['Endereço de e-mail'] || 'Não informado'}</span>
+                        </div>
+                        ${member['E-mail Profissional:'] ? `
+                        <div class="detail-item">
+                            <span class="detail-icon">💼</span>
+                            <span>${member['E-mail Profissional:']}</span>
+                        </div>
+                        ` : ''}
+                        <div class="detail-item">
+                            <span class="detail-icon">📱</span>
+                            <span>${member['Número do WhatsApp (com DDD)'] || 'Não informado'}</span>
+                        </div>
+                        ${member['Você já sabe qual é o seu nicho principal? (Pode ter subnichos relacionados ao principal)'] === 'Sim!' && member['Para quem já sabe:\n\nQuais são?'] ? `
+                        <div class="detail-item">
+                            <span class="detail-icon">🎯</span>
+                            <span><strong>Nicho:</strong> ${member['Para quem já sabe:\n\nQuais são?']}</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                    <div class="badges">
+                        ${member['Com que frequência você posta vídeos?'] ? `<span class="badge badge-frequency">${member['Com que frequência você posta vídeos?']}</span>` : ''}
+                        ${member['Você já sabe qual é o seu nicho principal? (Pode ter subnichos relacionados ao principal)'] === 'Sim!' ? `<span class="badge badge-niche">✅ Nicho Definido</span>` : ''}
+                        ${member['Possui e-mail para contato do que for relacionado ao seu perfil do TikTok?'] === 'Sim!' ? `<span class="badge badge-email">✉️ E-mail Profissional</span>` : ''}
+                    </div>
+                    ${tiktokClean ? `<a href="https://www.tiktok.com/@${tiktokClean}" target="_blank" class="tiktok-link">🎵 Ver TikTok</a>` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function updateStats() {
+            document.getElementById('totalMembers').textContent = membersData.length;
+            
+            const activeCreators = membersData.filter(m => 
+                m['Você já produz conteúdo no TikTok?'] === 'Sim!'
+            ).length;
+            document.getElementById('activeCreators').textContent = activeCreators;
+            
+            const withNiche = membersData.filter(m => 
+                m['Você já sabe qual é o seu nicho principal? (Pode ter subnichos relacionados ao principal)'] === 'Sim!'
+            ).length;
+            document.getElementById('withNiche').textContent = withNiche;
+            
+            const withEmail = membersData.filter(m => 
+                m['Possui e-mail para contato do que for relacionado ao seu perfil do TikTok?'] === 'Sim!' || 
+                m['E-mail Profissional:']
+            ).length;
+            document.getElementById('withEmail').textContent = withEmail;
+        }
+
+        function renderCharts() {
+            // Frequência de postagens
+            const frequencies = {};
+            membersData.forEach(m => {
+                const freq = m['Com que frequência você posta vídeos?'] || 'Não informado';
+                frequencies[freq] = (frequencies[freq] || 0) + 1;
+            });
+            renderBarChart('frequencyChart', frequencies);
+
+            // Nichos
+            const niches = {};
+            membersData.forEach(m => {
+                const hasNiche = m['Você já sabe qual é o seu nicho principal? (Pode ter subnichos relacionados ao principal)'];
+                if (hasNiche === 'Sim!') {
+                    niches['Com nicho definido'] = (niches['Com nicho definido'] || 0) + 1;
+                } else {
+                    niches['Sem nicho definido'] = (niches['Sem nicho definido'] || 0) + 1;
+                }
+            });
+            renderBarChart('nicheChart', niches);
+
+            // Estados
+            const states = {};
+            membersData.forEach(m => {
+                const location = m['Cidade e Estado:'] || '';
+                const state = location.split('/').pop()?.trim().toUpperCase() || 'Não informado';
+                states[state] = (states[state] || 0) + 1;
+            });
+            renderBarChart('stateChart', states);
+
+            // Contas secundárias
+            const secondary = {
+                'Com contas secundárias': membersData.filter(m => m['Possui conta(s) secundária(s)?'] === 'Sim').length,
+                'Sem contas secundárias': membersData.filter(m => m['Possui conta(s) secundária(s)?'] !== 'Sim').length
+            };
+            renderBarChart('secondaryChart', secondary);
+        }
+
+        function renderBarChart(elementId, data) {
+            const container = document.getElementById(elementId);
+            container.innerHTML = '';
+            
+            const sortedData = Object.entries(data).sort((a, b) => b[1] - a[1]);
+            const maxValue = Math.max(...sortedData.map(d => d[1]));
+            
+            sortedData.forEach(([label, value]) => {
+                const percentage = (value / maxValue) * 100;
+                const item = document.createElement('div');
+                item.className = 'bar-item';
+                item.innerHTML = `
+                    <div class="bar-label">${label}</div>
+                    <div class="bar-container">
+                        <div class="bar-fill" style="width: ${percentage}%">${value}</div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function filterMembers() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filterFreq = document.getElementById('filterFrequency').value;
+            const filterNicheVal = document.getElementById('filterNiche').value;
+
+            filteredData = membersData.filter(member => {
+                const matchesSearch = 
+                    member['Nome completo:']?.toLowerCase().includes(searchTerm) ||
+                    member['Como prefere ser chamada?']?.toLowerCase().includes(searchTerm) ||
+                    member['Cidade e Estado:']?.toLowerCase().includes(searchTerm) ||
+                    member['Para quem já sabe:\n\nQuais são?']?.toLowerCase().includes(searchTerm);
+
+                const matchesFreq = !filterFreq || member['Com que frequência você posta vídeos?'] === filterFreq;
+                
+                const matchesNiche = !filterNicheVal || 
+                    member['Você já sabe qual é o seu nicho principal? (Pode ter subnichos relacionados ao principal)'] === filterNicheVal;
+
+                return matchesSearch && matchesFreq && matchesNiche;
+            });
+
+            renderMembers();
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function exportData() {
+            const headers = Object.keys(membersData[0]);
+            const csv = [
+                headers.join(','),
+                ...membersData.map(row => 
+                    headers.map(header => {
+                        const value = row[header] || '';
+                        return `"${value.replace(/"/g, '""')}"`;
+                    }).join(',')
+                )
+            ].join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'garotas-apoiam-garotas-' + new Date().toISOString().split('T')[0] + '.csv');
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Carregar dados ao iniciar
+        loadData();
+
+        // Auto-refresh a cada 5 minutos (opcional)
+        setInterval(() => {
+            loadData();
+        }, 300000); // 5 minutos
+    </script>
+</body>
+</html>
